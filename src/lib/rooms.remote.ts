@@ -16,7 +16,7 @@ function requireUser() {
 	return locals.user;
 }
 
-export const createRoom = form(z.object({}), async () => {
+export const createRoom = form('unchecked', async () => {
 	const user = requireUser();
 	let code = '';
 	for (let i = 0; i < 5 && !code; i++) {
@@ -24,8 +24,8 @@ export const createRoom = form(z.object({}), async () => {
 		try {
 			await rooms.insertOne({ _id: candidate, ownerId: user.id, createdAt: new Date() });
 			code = candidate;
-		} catch (e: any) {
-			if (e?.code !== 11000) throw e; // 11000 = duplicate key, retry
+		} catch (e: unknown) {
+			if (!(e && typeof e === 'object' && 'code' in e && e.code === 11000)) throw e; // 11000 = duplicate key, retry
 		}
 	}
 	if (!code) error(500, 'Could not create room');
