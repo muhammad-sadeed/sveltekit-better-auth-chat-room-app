@@ -11,8 +11,10 @@ const creds = z.object({
 export const signIn = form(creds, async ({ email, password }) => {
 	try {
 		await auth.api.signInEmail({ body: { email, password } });
-	} catch {
-		error(401, 'Invalid credentials');
+	} catch (caughtError) {
+		if (caughtError instanceof Error) {
+			return { error: caughtError.message };
+		}
 	}
 	redirect(303, '/');
 });
@@ -22,7 +24,7 @@ export const signUp = form(creds.extend({ name: z.string().min(1) }), async (dat
 		await auth.api.signUpEmail({ body: data });
 	} catch (caughtError) {
 		if (caughtError instanceof Error) {
-			error(409, caughtError.message);
+			return { error: caughtError.message };
 		}
 	}
 	redirect(303, '/');

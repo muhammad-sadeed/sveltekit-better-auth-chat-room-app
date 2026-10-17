@@ -3,7 +3,7 @@
 	import favicon from '#lib/assets/favicon.svg';
 	import { ModeWatcher } from 'mode-watcher';
 	import type { LayoutProps } from './$types';
-	
+	import { Toaster } from '#lib/components/ui/sonner/index.js';
 
 	let { children }: LayoutProps = $props();
 </script>
@@ -13,4 +13,5 @@
 </svelte:head>
 
 <ModeWatcher />
+<Toaster />
 {@render children()}

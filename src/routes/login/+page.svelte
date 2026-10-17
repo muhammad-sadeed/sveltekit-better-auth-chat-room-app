@@ -4,8 +4,18 @@
 	import { Input } from '#lib/components/ui/input/index.js';
 	import { Label } from '#lib/components/ui/label/index.js';
 	import { signIn, signInWithGoogle, signUp } from '#lib/auth.remote.ts';
+	import { toast } from 'svelte-sonner';
 
 	let isSignUp = $state(false);
+
+	$effect(() => {
+		if (signUp.result?.error) {
+			toast(signUp.result.error);
+		}
+		if (signIn.result?.error) {
+			toast(signIn.result.error);
+		}
+	});
 </script>
 
 <div class="flex min-h-screen items-center justify-center">
