@@ -52,6 +52,7 @@
 		"better-auth": "^1.7.10",
 		"mode-watcher": "^1.1.0",
 		"mongodb": "^7.7.0",
+		"trystero": "^0.26.0",
 		"zod": "^4.6.7"
 	}
 }
