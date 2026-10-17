@@ -1,5 +1,15 @@
 import { MongoClient } from 'mongodb';
 import { MONGODB_URI } from '$app/env/private';
 
-const client = new MongoClient(MONGODB_URI);
+const uri = MONGODB_URI;
+const globalMongo = globalThis as unknown as {
+	_mongoClient?: MongoClient;
+};
+
+export const client = globalMongo._mongoClient ?? new MongoClient(uri);
+
+if (process.env.NODE_ENV !== 'production') {
+	globalMongo._mongoClient = client;
+}
+
 export const db = client.db('myapp');
