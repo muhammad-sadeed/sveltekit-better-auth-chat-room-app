@@ -11,6 +11,18 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+
+	interface Window {
+		/**
+		 * Exposed by the Electron preload bridge (electron/preload.cjs).
+		 * Undefined in the web build, which is how desktop-only UI is gated.
+		 */
+		desktop?: {
+			isDesktop: boolean;
+			getAlwaysOnTop(): Promise<boolean>;
+			setAlwaysOnTop(value: boolean): Promise<boolean>;
+		};
+	}
 }
 
 export {};

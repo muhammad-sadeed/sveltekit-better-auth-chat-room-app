@@ -6,8 +6,10 @@
 	import { getUser, signOut } from '#lib/auth.remote.ts';
 	import { createRoom, joinRoom } from '#lib/rooms.remote.ts';
 	import { Skeleton } from '#lib/components/ui/skeleton/index.js';
+	import AlwaysOnTopToggle from '#lib/components/always-on-top-toggle.svelte';
 	import { LogOut, MessageCircle, Plus, LogIn } from '@lucide/svelte';
 	import ChatBackdrop from '#lib/components/chat-backdrop.svelte';
+	import ToggleTheme from '#lib/components/ui/theme-toggle/Toggle.svelte';
 </script>
 
 <ChatBackdrop class="absolute inset-0 -z-10" />
@@ -66,7 +68,7 @@
 <div class="flex min-h-screen flex-col">
 	<header class="flex justify-center px-6 py-3">
 		<nav
-			class="flex h-14 w-96 max-w-full items-center justify-between rounded-2xl border bg-[#0A0A0A] px-5 shadow-sm"
+			class="flex h-14 w-96 max-w-full items-center justify-between rounded-2xl border bg-background px-5 shadow-sm"
 		>
 			<MessageCircle class="size-5" />
 
@@ -79,17 +81,21 @@
 				<span class="text-sm font-medium">{(await getUser()).name}</span>
 			</div>
 
-			<form {...signOut}>
-				<Button
-					type="submit"
-					variant="ghost"
-					size="icon"
-					class="size-9 rounded-lg"
-					loading={signOut.pending > 0}
-				>
-					<LogOut class="size-5" />
-				</Button>
-			</form>
+			<div class="flex items-center gap-2">
+				<ToggleTheme />
+				<AlwaysOnTopToggle />
+				<form {...signOut}>
+					<Button
+						type="submit"
+						variant="ghost"
+						size="icon"
+						class="size-9 rounded-lg"
+						loading={signOut.pending > 0}
+					>
+						<LogOut class="size-5" />
+					</Button>
+				</form>
+			</div>
 		</nav>
 	</header>
 
