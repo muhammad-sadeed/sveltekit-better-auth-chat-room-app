@@ -5,10 +5,20 @@ on:
     tags:
       - 'v*'
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Optional release tag (for example: v1.2.3). Leave empty to only build/upload artifacts.'
+        required: false
+        type: string
+
+permissions:
+  contents: write
 
 jobs:
   build-windows:
     runs-on: windows-latest
+    env:
+      RELEASE_TAG: ${{ github.ref_type == 'tag' && github.ref_name || inputs.release_tag }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,3 +39,16 @@ jobs:
           path: |
             dist-electron/*.exe
           if-no-files-found: error
+
+      - name: Create release and upload EXEs
+        if: ${{ env.RELEASE_TAG != '' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.RELEASE_TAG }}
+          name: ${{ env.RELEASE_TAG }}
+          files: dist-electron/*.exe
+          generate_release_notes: true
+
+      - name: Skip release when no tag is provided
+        if: ${{ env.RELEASE_TAG == '' }}
+        run: echo "No tag detected/provided. Build artifacts were uploaded, and release creation was skipped."
