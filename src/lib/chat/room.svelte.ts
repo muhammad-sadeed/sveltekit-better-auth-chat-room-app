@@ -10,12 +10,18 @@ export class Room {
 	#me: { id: string; name: string };
 	#sendChat: (m: { id: string; name: string; text: string; ts: number }) => Promise<void>;
 
-	constructor(code: string, roomKey: string, me: { id: string; name: string }) {
+	constructor(
+		code: string,
+		roomKey: string,
+		iceServers: RTCIceServer[],
+		me: { id: string; name: string }
+	) {
 		this.#me = me;
 		this.#room = joinRoom(
 			{
 				appId: 'sv-better-auth-chat',
-				password: roomKey
+				password: roomKey,
+				rtcConfig: { iceServers }
 			},
 			code
 		);
