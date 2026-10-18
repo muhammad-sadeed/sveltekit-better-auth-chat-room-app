@@ -115,7 +115,7 @@
 		>
 			<pre
 				aria-hidden="true"
-				class="absolute inset-0 m-0 overflow-hidden font-mono text-[12px] leading-[14px] text-foreground/50 select-none">{art}</pre>
+				class="absolute inset-0 m-0 overflow-hidden font-mono text-[12px] leading-3.5 text-foreground/50 select-none">{art}</pre>
 		</div>
 
 		<Card.Root class="rounded-none border-0 bg-transparent shadow-none ring-0">
