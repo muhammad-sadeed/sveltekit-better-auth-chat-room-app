@@ -3,14 +3,14 @@
 	import { Button } from '#lib/components/ui/button/index.js';
 	import { Input } from '#lib/components/ui/input/index.js';
 	import { Label } from '#lib/components/ui/label/index.js';
-	import { signOut } from '#lib/auth.remote.ts';
+	import { getUser, signOut } from '#lib/auth.remote.ts';
 	import { createRoom, joinRoom } from '#lib/rooms.remote.ts';
 	import { LogOut, MessageCircle, Plus, LogIn } from '@lucide/svelte';
-
-	// let { data } = $props();
-
-	// const initial = $derived(data.user.name?.[0]?.toUpperCase() ?? '?');
 </script>
+
+<svelte:boundary>
+	{#snippet pending()}<p>Loading…</p>{/snippet}
+</svelte:boundary>
 
 <div class="flex min-h-screen flex-col">
 	<header class="flex items-center justify-between border-b px-6 py-3">
@@ -24,9 +24,9 @@
 				<span
 					class="flex size-8 items-center justify-center rounded-full bg-muted text-sm font-medium"
 				>
-					<!-- {initial} -->
+					{(await getUser()).name?.[0]?.toUpperCase() ?? '?'}
 				</span>
-				<!-- <span class="hidden text-sm sm:inline">{data.user.name}</span> -->
+				<span class="hidden text-sm sm:inline">{(await getUser()).name}</span>
 			</div>
 			<form {...signOut}>
 				<Button type="submit" variant="ghost" size="sm">
