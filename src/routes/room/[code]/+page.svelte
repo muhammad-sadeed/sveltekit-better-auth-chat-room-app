@@ -3,6 +3,7 @@
 	import { Button } from '#lib/components/ui/button/index.js';
 	import { Input } from '#lib/components/ui/input/index.js';
 	import { Room } from '#lib/chat/room.svelte.ts';
+	import ChatBackdrop from '#lib/components/chat-backdrop.svelte';
 
 	let { data } = $props();
 
@@ -23,10 +24,12 @@
 	}
 </script>
 
+<ChatBackdrop class="absolute inset-0 -z-10" />
+
 <div class="mx-auto flex h-screen max-w-2xl flex-col gap-4 p-4">
-	<header class="flex items-center justify-between">
-		<div>
-			<h1 class="text-lg font-semibold">Room {data.code}</h1>
+    <header class="flex items-center justify-between bg-[#131313] px-4 py-2 rounded-lg">
+    <div>
+        <h1 class="text-lg font-semibold">Room {data.code}</h1>
 			<p class="text-sm text-muted-foreground">
 				{Object.keys(room?.peers ?? {}).length} peer(s) linked
 			</p>
@@ -39,7 +42,7 @@
 		</div>
 	</header>
 
-	<div class="flex-1 space-y-2 overflow-y-auto rounded-md border p-3">
+	<div class="flex-1 space-y-2 overflow-y-auto rounded-md border bg-[#0a0a0a] p-3">
 		{#each room?.messages ?? [] as m (m.id)}
 			<div class="flex flex-col {m.mine ? 'items-end' : 'items-start'}">
 				<span class="text-xs text-muted-foreground">{m.mine ? 'You' : m.name}</span>
@@ -55,7 +58,7 @@
 	</div>
 
 	<form onsubmit={send} class="flex gap-2">
-		<Input bind:value={text} placeholder="Type a message" autocomplete="off" />
+		<Input bind:value={text} placeholder="Type a message" autocomplete="off" class="bg-[#131313]" />
 		<Button type="submit">Send</Button>
 	</form>
 </div>
