@@ -5,6 +5,7 @@
 	import { Room } from '#lib/chat/room.svelte.ts';
 	import ChatBackdrop from '#lib/components/chat-backdrop.svelte';
 	import AlwaysOnTopToggle from '#lib/components/always-on-top-toggle.svelte';
+	import * as MessageScroller from '#lib/components/ui/message-scroller/index.ts';
 
 	let { data } = $props();
 

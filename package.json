@@ -65,6 +65,7 @@
 		"@internationalized/date": "^3.12.0",
 		"@lucide/svelte": "^1.59.0",
 		"@resvg/resvg-js": "^2.6.2",
+		"@shadcn-svelte/primitives": "^0.0.1",
 		"@sveltejs/adapter-vercel": "^7.0.0",
 		"@sveltejs/enhanced-img": "^1.0.0",
 		"@sveltejs/kit": "^3.0.0",
