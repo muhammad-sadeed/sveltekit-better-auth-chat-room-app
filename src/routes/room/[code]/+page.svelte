@@ -10,7 +10,7 @@
 	let text = $state('');
 
 	onMount(() => {
-		room = new Room(data.code, data.roomKey, data.me);
+		room = new Room(data.code, data.roomKey, data.iceServers, data.me);
 		return () => room?.close();
 	});
 
