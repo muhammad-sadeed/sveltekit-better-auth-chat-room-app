@@ -6,6 +6,7 @@
 	import { getUser, signOut } from '#lib/auth.remote.ts';
 	import { createRoom, joinRoom } from '#lib/rooms.remote.ts';
 	import { Skeleton } from '#lib/components/ui/skeleton/index.js';
+	import AlwaysOnTopToggle from '#lib/components/always-on-top-toggle.svelte';
 	import { LogOut, MessageCircle, Plus, LogIn } from '@lucide/svelte';
 	import ChatBackdrop from '#lib/components/chat-backdrop.svelte';
 	import ToggleTheme from '#lib/components/ui/theme-toggle/Toggle.svelte';
@@ -82,6 +83,7 @@
 
 			<div class="flex items-center gap-2">
 				<ToggleTheme />
+				<AlwaysOnTopToggle />
 				<form {...signOut}>
 					<Button
 						type="submit"

@@ -4,6 +4,7 @@
 	import { Input } from '#lib/components/ui/input/index.js';
 	import { Room } from '#lib/chat/room.svelte.ts';
 	import ChatBackdrop from '#lib/components/chat-backdrop.svelte';
+	import AlwaysOnTopToggle from '#lib/components/always-on-top-toggle.svelte';
 
 	let { data } = $props();
 
@@ -27,14 +28,15 @@
 <ChatBackdrop class="absolute inset-0 -z-10" />
 
 <div class="mx-auto flex h-screen max-w-2xl flex-col gap-4 p-4">
-    <header class="flex items-center justify-between bg-[#131313] px-4 py-2 rounded-lg">
-    <div>
-        <h1 class="text-lg font-semibold">Room {data.code}</h1>
+	<header class="flex items-center justify-between rounded-lg bg-[#131313] px-4 py-2">
+		<div>
+			<h1 class="text-lg font-semibold">Room {data.code}</h1>
 			<p class="text-sm text-muted-foreground">
 				{Object.keys(room?.peers ?? {}).length} peer(s) linked
 			</p>
 		</div>
 		<div class="flex gap-2">
+			<AlwaysOnTopToggle variant="outline" size="icon-sm" />
 			<Button variant="outline" size="sm" onclick={() => navigator.clipboard.writeText(data.code)}>
 				Copy code
 			</Button>

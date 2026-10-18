@@ -1,4 +1,8 @@
-import { app, BrowserWindow, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, shell } from 'electron';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Dev mode is enabled by the `electron:dev` script (vite dev server is managed
 // externally via concurrently/wait-on) and points at the local dev server.
@@ -14,6 +18,14 @@ const PROD_URL =
 /** @type {BrowserWindow | null} */
 let win = null;
 
+// Desktop-only: "always on top" is driven from the renderer via the preload
+// bridge. The web build never loads a preload, so it can't reach these handlers.
+ipcMain.handle('window:get-always-on-top', () => win?.isAlwaysOnTop() ?? false);
+ipcMain.handle('window:set-always-on-top', (_event, value) => {
+	win?.setAlwaysOnTop(Boolean(value));
+	return win?.isAlwaysOnTop() ?? false;
+});
+
 /**
  * @param {string} url
  */
@@ -23,6 +35,7 @@ function createWindow(url) {
 		height: 800,
 		title: 'P2P Chat',
 		webPreferences: {
+			preload: path.join(__dirname, 'preload.cjs'),
 			contextIsolation: true,
 			nodeIntegration: false,
 			sandbox: true
