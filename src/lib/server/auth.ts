@@ -22,7 +22,7 @@ export const auth = betterAuth({
 		}
 	},
 	emailAndPassword: { enabled: true },
-	plugins: [sveltekitCookies(getRequestEvent), bearer()],
+	plugins: [bearer(), sveltekitCookies(getRequestEvent)],
 	trustedOrigins: [BETTER_AUTH_URL, 'http://localhost:5173', 'myapp://*'],
 	advanced: {
 		useSecureCookies: true,
