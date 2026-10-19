@@ -4,6 +4,7 @@
 	import { ModeWatcher } from 'mode-watcher';
 	import type { LayoutProps } from './$types';
 	import { Toaster } from '#lib/components/ui/sonner/index.js';
+	import DesktopUpdate from '#lib/components/desktop-update.svelte';
 
 	let { children }: LayoutProps = $props();
 </script>
@@ -14,4 +15,5 @@
 
 <ModeWatcher />
 <Toaster />
+<DesktopUpdate />
 {@render children()}
