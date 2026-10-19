@@ -11,9 +11,9 @@
 		"preview": "vite preview",
 		"electron:dev": "concurrently -k \"vite dev\" \"wait-on tcp:5173 && ELECTRON_DEV=1 electron .\"",
 		"electron:start": "electron .",
-		"electron:dist": "electron-builder --mac",
-		"electron:dist:win": "electron-builder --win",
-		"electron:dist:all": "electron-builder --mac --win",
+		"electron:dist": "electron-builder --mac --publish never",
+		"electron:dist:win": "electron-builder --win --publish never",
+		"electron:dist:all": "electron-builder --mac --win --publish never",
 		"icon": "bun run electron/build/generate-icon.mjs",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -32,11 +32,21 @@
 			"electron/main.mjs",
 			"electron/preload.cjs",
 			"package.json",
-			"!node_modules/**/*"
+			"!node_modules/**/*",
+			"node_modules/{electron-updater,builder-util-runtime,debug,fs-extra,graceful-fs,js-yaml,jsonfile,lazy-val,lodash.escaperegexp,lodash.isequal,ms,sax,semver,tiny-typed-emitter,universalify}/**/*"
+		],
+		"artifactName": "P2P-Chat-${version}-${arch}.${ext}",
+		"publish": [
+			{
+				"provider": "github",
+				"owner": "muhammad-sadeed",
+				"repo": "sveltekit-better-auth-chat-room-app"
+			}
 		],
 		"mac": {
 			"target": [
-				"dmg"
+				"dmg",
+				"zip"
 			],
 			"category": "public.app-category.social-networking",
 			"icon": "electron/build/icon.png"
@@ -45,12 +55,6 @@
 			"target": [
 				{
 					"target": "nsis",
-					"arch": [
-						"x64"
-					]
-				},
-				{
-					"target": "portable",
 					"arch": [
 						"x64"
 					]
@@ -102,6 +106,7 @@
 	},
 	"dependencies": {
 		"better-auth": "^1.7.10",
+		"electron-updater": "^6.8.9",
 		"mode-watcher": "^1.1.0",
 		"mongodb": "^7.7.0",
 		"trystero": "^0.26.0",
